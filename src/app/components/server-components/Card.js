@@ -16,8 +16,7 @@ export default async function CardServer() {
         return data.filter(opt=>opt?.countRespose >=10)
     }
 
-    function getNumberOfSales(){
-        console.log(data.filter(opt=>opt?.plan?.typePlan !== 0))
+    function getNumberOfSales(){        
         return data.filter(opt=>opt?.plan?.typePlan !== 0 && opt?.plan!=null)
     }
     
