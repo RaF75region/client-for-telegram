@@ -25,4 +25,4 @@ jobs:
     - name: Create tag
       run: docker image tag client-for-bot:${{github.run_number}} ${{ secrets.SERVER_DOCKER }}/client-for-bot:latest
     - name: Push image
-      run: docker push ${{ secrets.SERVER_DOCKER }}/client-next:latest
+      run: docker push ${{ secrets.SERVER_DOCKER }}/client-for-bot:latest
