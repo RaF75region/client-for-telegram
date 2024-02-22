@@ -4,26 +4,40 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 
 async function loadPosts() {    
-    const res = await fetch(`http://18.209.245.122:9000/getCountUsers`);    
+    const res = await fetch(`http://localhost:5021/getCountUsers`);    
     return res.json();
 }
 
 export default async function CardServer() {
     const data = await loadPosts();
+    var array=null;
 
 
     function getActive(){
         return data.filter(opt=>opt?.countRespose >=10)
     }
 
-    function getNumberOfSales(){        
-        return data.filter(opt=>opt?.plan?.typePlan !== 0 && opt?.plan!=null)
+    function getNumberOfSales(){  
+        const res = data.filter(opt=>opt?.plan !== null).filter(opt=>opt?.plan?.typePlan !== 0);        
+        return res;
     }
     
+    function getFreeUsers(){
+        return data.filter(opt=>opt?.plan !== null).filter(opt=>opt?.plan?.typePlan === 0);
+    }
+
+    function getOnMounthUsers(){
+        return data.filter(opt=>opt?.plan !== null).filter(opt=>opt?.plan?.typePlan === 1);
+    }
+
+    function getOnYearUsers(){
+        return data.filter(opt=>opt?.plan !== null).filter(opt=>opt?.plan?.typePlan === 2);
+    }
     
 
     
     return (
+        <>
         <Box
             sx={{
                 width: '100%',
@@ -51,22 +65,26 @@ export default async function CardServer() {
                     <Typography>{getNumberOfSales().length}</Typography>
                 </CardContent>
             </Card>
-             {/* <Card sx={{backgroundColor:"rgba(255, 255, 255, 0.5)"}} color="neutral" orientation="horizontal" variant="outlined">
+            <Card sx={{backgroundColor:"rgba(255, 255, 255, 0.5)"}} color="neutral" orientation="horizontal" variant="outlined">
                 <CardContent>
-                    <Typography level="title-md">Count users:</Typography>
-                    <Typography>In developer</Typography>
+                    <Typography level="title-md">GPT-3.5:</Typography>
+                    <Typography>{getFreeUsers().length}</Typography>
                 </CardContent>
-            </Card> */}
-            {/* <Card sx={{backgroundColor:"rgba(255, 255, 255, 0.5)"}} color="neutral" orientation="horizontal" variant="outlined">
+            </Card>
+            <Card sx={{backgroundColor:"rgba(255, 255, 255, 0.5)"}} color="neutral" orientation="horizontal" variant="outlined">
                 <CardContent>
-                    <Typography level="title-md">Count users:</Typography>
-                    <Typography>{data.length}</Typography>
+                    <Typography level="title-md">GPT-4.0 mounth:</Typography>
+                    <Typography>{getOnMounthUsers().length}</Typography>
                 </CardContent>
-            </Card> */}
-            {/* // <div key={user.idUser} className="post-listing">
-                //     <h3 className="post-title">{user.idUser}</h3>
-                // </div> */}
-            {/* ))} */}
-        </Box>
+            </Card>
+            <Card sx={{backgroundColor:"rgba(255, 255, 255, 0.5)"}} color="neutral" orientation="horizontal" variant="outlined">
+                <CardContent>
+                    <Typography level="title-md">GPT-4.0 year:</Typography>
+                    <Typography>{getOnYearUsers().length}</Typography>
+                </CardContent>
+            </Card>
+           
+        </Box>       
+        </>
     );
 };
