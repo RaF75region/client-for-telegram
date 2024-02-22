@@ -4,7 +4,7 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 
 async function loadPosts() {    
-    const res = await fetch(`http://localhost:5021/getCountUsers`);    
+    const res = await fetch(`http://18.209.245.122:9000/getCountUsers`);    
     return res.json();
 }
 
