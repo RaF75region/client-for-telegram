@@ -4,14 +4,15 @@ import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 
 async function loadPosts() {    
-    const res = await fetch(`http://18.209.245.122:9000/getCountUsers`);    
+    const res = await fetch(`http://localhost:5021/getCountUsers`,
+    {
+        cache: "force-cache",
+    });    
     return res.json();
 }
 
 export default async function CardServer() {
-    const data = await loadPosts();
-    var array=null;
-
+    const data = await loadPosts();        
 
     function getActive(){
         return data.filter(opt=>opt?.countRespose >=10)
